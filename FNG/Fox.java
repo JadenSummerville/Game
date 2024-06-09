@@ -59,7 +59,8 @@ public class Fox extends Anam {
             door.nock();
             return;
         }
-        System.out.println("null_FOX");
+        System.out.println("Death By Fox");
+        display.dispose();
         ticker.endLoop();
     }
     public void incrementSpeed(double amount) {

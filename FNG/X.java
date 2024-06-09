@@ -21,8 +21,8 @@ public class X {
         j.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                System.out.println("X Pressed");
                 d.dispose();
-                System.out.println("null_X");
                 t.endLoop();
             }
         });

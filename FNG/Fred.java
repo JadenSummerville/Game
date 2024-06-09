@@ -54,7 +54,8 @@ public class Fred extends Anam {
             door.nock();
             return;
         }
-        System.out.println("null_FRED");
+        System.out.println("Death By Fred");
+        display.dispose();
         ticker.endLoop();
     }
     public void incrementSpeed(double amount) {

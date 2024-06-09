@@ -54,7 +54,8 @@ public class Bon extends Anam {
             door.nock();
             return;
         }
-        System.out.println("null_BON");
+        System.out.println("Death By Bon");
+        display.dispose();
         ticker.endLoop();
     }
     public void incrementAccel(double amount) {
