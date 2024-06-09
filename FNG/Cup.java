@@ -16,7 +16,7 @@ public class Cup {
     private double y;
     public int i;
     private int velocity;  // 0=up left 1=up 2=up right 3=right 4=down right 5=down 6=down left 7=left 8=stationary
-    private boolean activated;
+    public boolean activated;
     private static final double SPEED = 1;
     private static Random random = new Random();
     private JLabel cup;
@@ -32,10 +32,15 @@ public class Cup {
         cup.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
+                Cup.this.chi.checkRep();
+                if (!Cup.this.activated) {
+                    return;
+                }
+                //System.out.println(Cup.this.velocity + " " + Cup.this.i + " " + Cup.this.chi.numCups() + " a "  + Cup.this.activated);
+                chi.pushPopCup(Cup.this.i);
                 cup.setVisible(false);
-                activated = false;
                 chi.toAttack();
-                chi.pushPopCup(i);
+                chi.checkRep();
             }
         });
         d.setZOrder(cup, 0);
@@ -44,11 +49,14 @@ public class Cup {
         x = 760;
         y = 350;
         activated = true;
-        cup.setVisible(true);
         this.velocity = 8;
+        this.cup.setLocation((int)x, (int)y);
+        cup.setVisible(true);
     }
     public void run() {
+        chi.checkRep();
         if (!activated) {
+            chi.checkRep();
             return;
         }
         switch (velocity) {
@@ -97,6 +105,6 @@ public class Cup {
         if (random.nextDouble() < .01) {
             velocity = random.nextInt(8);
         }
-
+        chi.checkRep();
     }
 }

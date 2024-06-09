@@ -20,6 +20,10 @@ public class Display {
         frame.addKeyListener(keyBoard);
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         gd.setFullScreenWindow(frame);
+        //frame.setPreferredSize(new Dimension(1000, 800));
+        //frame.pack();
+        //frame.setLocationRelativeTo(null);
+        
         
         contentPane = new JPanel(null);
         contentPane.setOpaque(false);

@@ -45,11 +45,8 @@ public class Door extends Ticker.Entity {
         open.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Berr1");
                 if (e.getButton() != MouseEvent.BUTTON3) {
-                    System.out.println("Berr2");
                     barricadeDoor();
-                    System.out.println("Berr5");
                 }
             }
         });
@@ -63,11 +60,9 @@ public class Door extends Ticker.Entity {
         });
     }
     public boolean barricadeDoor() {
-        System.out.println("Berr3 " + barricaded + " " + barricades);
         if(barricaded || barricades == 0) {
             return false;
         }
-        System.out.println("Berr4");
         barricaded = true;
         barricades--;
 
@@ -146,7 +141,7 @@ public class Door extends Ticker.Entity {
         return barricaded;
     }
     public static void main(String[] args) {
-        int night = 1;
+        int night = 2;
         Display d = new Display();
         Door[] doors = new Door[4];
         for (int i = 0; i != doors.length; i++) {
@@ -165,7 +160,7 @@ public class Door extends Ticker.Entity {
                 Cam.setCamBreaks( 0, 1);
                 break;
             case 2:
-                fred = new Fred( .003, doors[3], d);
+                fred = new Fred( .002, doors[3], d);
                 bon = new Bon( 0, doors[0], d);
                 fox = new Fox( 0, doors[2], d);
                 chi = new Chi(8_000_000_000L, doors[1], d);
