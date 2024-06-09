@@ -70,4 +70,7 @@ public class Display {
         contentPane.setComponentZOrder(jlabel, index);
         contentPane.repaint();
     }
+    public void dispose() {
+        frame.dispose();
+    }
 }

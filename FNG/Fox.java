@@ -1,15 +1,12 @@
 package FNG;
 
-import Game.Ticker;
-
 import java.io.File;
-
-import javax.swing.JLabel;
+import java.util.Random;
 
 import Game.Display;
 
-public class Fred extends Anam {
-    private final int HEIGHT;
+public class Fox extends Anam {
+    private final int WIDTH;
     private final double MAX_PROGRESS;
     private Display display;
     private double progress;
@@ -17,15 +14,17 @@ public class Fred extends Anam {
     private double speed;
     private Door door;
     private boolean observed = false;
-    public Fred(double speed, Door door, Display display) {
+    private boolean on = false;
+    private Random random = new Random();
+    public Fox(double speed, Door door, Display display) {
         MAX_PROGRESS = 10;
-        HEIGHT = 700;
+        WIDTH = 964;
         progress = MAX_PROGRESS;
         this.speed = speed;
         this.display = display;
         this.door = door;
         String path = new File("").getAbsolutePath();
-        image = this.display.addImage(path+"/Photo/Freddy.png", 100, 100, 0, HEIGHT);
+        image = this.display.addImage(path+"/Photo/Foxy.png", 100, 100, 0, WIDTH);
         image.setVisible(false);
     }
     @Override
@@ -40,13 +39,19 @@ public class Fred extends Anam {
     }
     @Override
     public void update() {
-        if (!observed) {
+        if (on) {
             progress -= speed;
+        }
+        else {
+            Random random = new Random();
+            if (random.nextDouble() < 0.00043 && !observed) {
+                on = true;
+            }
         }
         if (progress <= 0) {
             attackDoor();
         }
-        image.setLocation((int)(1200 - 1200*progress/MAX_PROGRESS), HEIGHT);
+        image.setLocation(WIDTH, (int)(250 - 250 * progress/MAX_PROGRESS));
     }
     public void attackDoor() {
         if (door.doorIsBarricaded()) {
@@ -54,7 +59,7 @@ public class Fred extends Anam {
             door.nock();
             return;
         }
-        System.out.println("null_FRED");
+        System.out.println("null_FOX");
         ticker.endLoop();
     }
     public void incrementSpeed(double amount) {
@@ -62,5 +67,13 @@ public class Fred extends Anam {
         if (speed < 0) {
             speed = 0;
         }
+    }
+    public boolean shockAttempt() {
+        if(random.nextDouble() < .5) {
+            on = false;
+            progress = MAX_PROGRESS;
+            return true;
+        }
+        return false;
     }
 }
