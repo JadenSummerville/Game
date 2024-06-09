@@ -26,8 +26,10 @@ public class Cam extends Entity {
     private boolean onHover;
     private boolean crashed;
     private static Raffle<Cam> raffle = new Raffle<>();
-    private static final int STUBORN = 100;
+    private static final int STUBORN = 1_000;
     private static ArrayList<Cam> cams = new ArrayList<>();
+    private static double camFragility;
+    private static double camRecovery;
     Cam(int x, int y, Anam character, Display display) {
         cams.add(this);
         this.character = character;
@@ -71,15 +73,14 @@ public class Cam extends Entity {
     }
     public void update() {
         if (crashed) {
-            chanceToFix(.001);
+            chanceToFix(camRecovery);
             return;
         }
         if (onHover) {
-            //System.out.println(1.0 * raffle.getAmount(this) / raffle.size());
-            //System.out.println(raffle.getAmount(this) + " " + raffle.size());
             raffle.add(this);
-            chanceToCrash(1.0 * raffle.getAmount(this) / raffle.size() * .01);
+            chanceToCrash(1.0 * raffle.getAmount(this) / raffle.size() * camFragility);
             if (raffle.size() > 2 * STUBORN) {
+                //System.out.println("Restart Cam Focus");
                 for (int i = 0; i != cams.size(); i++) {
                     raffle.setAmount(cams.get(i), raffle.getAmount(cams.get(i)) / 2);
                 }
@@ -117,5 +118,9 @@ public class Cam extends Entity {
         if (onHover) {
             character.startObserving();
         }
+    }
+    public static void setCamBreaks(double camFragilityP, double camRecoveryP) {
+        camRecovery = camRecoveryP;
+        camFragility = camFragilityP;
     }
 }

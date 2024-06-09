@@ -67,7 +67,7 @@ public class Zscore {
         int loops = loops_required(max, min);
         Random random = new Random();
         for(int i = 0; i < loops; i++){
-            if (random.nextDouble()>(integrate(min)-integrate((max+min)/2))/(integrate(min)-integrate(max))){
+            if (random.nextDouble() > (integrate(min)-integrate((max+min)/2))/(integrate(min)-integrate(max))){
                 min = (max + min)/2;
             }else{
                 max = (max + min)/2;

@@ -21,6 +21,7 @@ public class Clock extends Ticker.Entity {
         private Fred fred;
         private Bon bon;
         private Fox fox;
+        private Display display;
 
     public Clock(Fred fred, Bon bon, Fox fox, Display display) {
         int x = 0;
@@ -29,6 +30,7 @@ public class Clock extends Ticker.Entity {
         this.fred = fred;
         this.bon = bon;
         this.fox = fox;
+        this.display = display;
 
         String path = new File("").getAbsolutePath();
         this.t12 = display.addImage(path+"/Photo/12am.png", SIZE, SIZE, x, y);
@@ -48,7 +50,7 @@ public class Clock extends Ticker.Entity {
         Zscore zScoref = new Zscore(.7,1,10, -10);
         Zscore zScoreb = new Zscore(.5,3,10, -10);
         
-        long timePerHour = 90_000L;//10_000L;
+        long timePerHour = 80_000L;//10_000L;9
         //System.out.println(timePerHour);
         Timer timer = new Timer();
 
@@ -80,7 +82,7 @@ public class Clock extends Ticker.Entity {
                 t3.setVisible(true);
                 //
                 hour(zScoref, zScoreb);
-                fox.incrementSpeed(.007);
+                fox.incrementSpeed(.001);
             }
         }, 3*timePerHour);
         // 4am
@@ -108,13 +110,15 @@ public class Clock extends Ticker.Entity {
             @Override
             public void run() {
                 t5.setVisible(false);
-                //
+                System.out.println("You won!");
+                display.dispose();
+                ticker.endLoop();
             }
         }, 6*timePerHour);
         //
     }
     private void hour(Zscore zScoref, Zscore zScoreb) {
         bon.incrementAccel(0.0000015*zScoreb.generate_value());
-        fred.incrementSpeed(0.0007*zScoref.generate_value());
+        fred.incrementSpeed(0.001*zScoref.generate_value());
     }
 }

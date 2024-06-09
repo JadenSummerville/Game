@@ -45,8 +45,11 @@ public class Door extends Ticker.Entity {
         open.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                System.out.println("Berr1");
                 if (e.getButton() != MouseEvent.BUTTON3) {
+                    System.out.println("Berr2");
                     barricadeDoor();
+                    System.out.println("Berr5");
                 }
             }
         });
@@ -60,9 +63,11 @@ public class Door extends Ticker.Entity {
         });
     }
     public boolean barricadeDoor() {
+        System.out.println("Berr3 " + barricaded + " " + barricades);
         if(barricaded || barricades == 0) {
             return false;
         }
+        System.out.println("Berr4");
         barricaded = true;
         barricades--;
 
@@ -141,7 +146,7 @@ public class Door extends Ticker.Entity {
         return barricaded;
     }
     public static void main(String[] args) {
-        int night = 2;
+        int night = 1;
         Display d = new Display();
         Door[] doors = new Door[4];
         for (int i = 0; i != doors.length; i++) {
@@ -150,28 +155,49 @@ public class Door extends Ticker.Entity {
         Fred fred;
         Bon bon;
         Fox fox;
+        Chi chi;
         switch (night) {
             case 1:
                 fred = new Fred( 0, doors[3], d);
                 bon = new Bon( 0, doors[0], d);
                 fox = new Fox( 0, doors[2], d);
+                chi = new Chi(480_000_000_000L-5_000_000_000L, doors[1], d);
+                Cam.setCamBreaks( 0, 1);
                 break;
             case 2:
-                fred = new Fred( .001, doors[3], d);
+                fred = new Fred( .003, doors[3], d);
                 bon = new Bon( 0, doors[0], d);
-                fox = new Fox( 0.003, doors[2], d);
+                fox = new Fox( 0, doors[2], d);
+                chi = new Chi(8_000_000_000L, doors[1], d);
+                Cam.setCamBreaks( .003, 0.002);
                 break;
             case 3:
-                fred = new Fred( .0005, doors[3], d);
+                fred = new Fred( .001, doors[3], d);
+                bon = new Bon( 0.00003, doors[0], d);
+                fox = new Fox( 0.004, doors[2], d);
+                chi = new Chi(100_000_000_000L, doors[1], d);
+                Cam.setCamBreaks( .005, 0.0012);
+                break;
+            case 4:
+                fred = new Fred( .003, doors[3], d);
                 bon = new Bon( 0.00002, doors[0], d);
-                fox = new Fox( 0.0025, doors[2], d);
+                fox = new Fox( 0.007, doors[2], d);
+                chi = new Chi(40_000_000_000L, doors[1], d);
+                Cam.setCamBreaks( .008, 0.001);
+                break;
+            case 5:
+                fred = new Fred( .005, doors[3], d);
+                bon = new Bon( 0.00004, doors[0], d);
+                fox = new Fox( 0.0065, doors[2], d);
+                chi = new Chi(12_000_000_000L, doors[1], d);
+                Cam.setCamBreaks( .01, 0.0007);
                 break;
             default:
                 throw new RuntimeException("Invalid night selected.");
         }
         Shock shock = new Shock(d, fox);
         Cam cam1 = new Cam(300, 290, bon, d);
-        Cam cam2 = new Cam(700, 290, fred, d);
+        Cam cam2 = new Cam(700, 290, chi, d);
         Cam cam3 = new Cam(1100, 290, fox, d);
         Cam cam4 = new Cam(1500, 290, fred, d);
         Clock clock = new Clock(fred, bon, fox, d);
@@ -185,6 +211,7 @@ public class Door extends Ticker.Entity {
         ticker.addEntity(cam2);
         ticker.addEntity(cam3);
         ticker.addEntity(cam4);
+        ticker.addEntity(chi);
         ticker.addEntity(fred);
         ticker.addEntity(bon);
         ticker.addEntity(fox);

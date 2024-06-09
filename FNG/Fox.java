@@ -44,7 +44,7 @@ public class Fox extends Anam {
         }
         else {
             Random random = new Random();
-            if (random.nextDouble() < 0.00043 && !observed) {
+            if (random.nextDouble() < 0.00044 && !observed) {
                 on = true;
             }
         }
@@ -64,9 +64,12 @@ public class Fox extends Anam {
         ticker.endLoop();
     }
     public void incrementSpeed(double amount) {
+        if (speed == 0) {
+            return;
+        }
         speed += amount;
         if (speed < 0) {
-            speed = 0;
+            speed = 0.001;
         }
     }
     public boolean shockAttempt() {
