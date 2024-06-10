@@ -198,12 +198,12 @@ public class Door extends Ticker.Entity {
                 fox = new Fox( 0.0045, doors[2], d);
                 chi = new Chi(180_000_000_000L, doors[1], d);
                 Cam.setCamBreaks( .0035, 0.0014);
-                new Shock(d, fox, foxShockX);
+                new Shock(d, fred, fredShockX);
                 break;
             case 5:
-                fred = new Fred( .006, doors[3], d, hall, propDoor1);
+                fred = new Fred( .0045, doors[3], d, hall, propDoor1);
                 bon = new Bon( 0.0000075, doors[0], d, hall, propDoor2);
-                fox = new Fox( 0.0042, doors[2], d);
+                fox = new Fox( 0.005, doors[2], d);
                 chi = new Chi(100_000_000_000L, doors[1], d);
                 Cam.setCamBreaks( .004, 0.0012);
                 new Shock(d, fox, foxShockX);

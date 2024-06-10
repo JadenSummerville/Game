@@ -105,6 +105,10 @@ public class Cam extends Entity {
         }
     }
     public void crash() {
+        int maxCrashTime = 17_345;
+        if (!canCrashActive) {
+            maxCrashTime = 28_345;
+        }
         this.brokenImage.setVisible(true);
         this.image.setVisible(false);
         crashed = true;
@@ -115,7 +119,7 @@ public class Cam extends Entity {
         public void run() {
             fix();
         }
-        }, 17_345);
+        }, maxCrashTime);
     }
     public void chanceToFix(double chance) {
         if (chance > random.nextDouble()) {
