@@ -26,8 +26,6 @@ public class Clock extends Ticker.Entity {
 
         private int time;
 
-        private static final boolean DEBUG = true;
-
     public Clock(Fred fred, Bon bon, Fox fox, Display display) {
         int x = 0;
         int y = 0;
@@ -142,11 +140,6 @@ public class Clock extends Ticker.Entity {
             default:
                 break;
         }
-        if (DEBUG) {
-            System.out.println("Hour: " + time);
-            System.out.println("B Accel " + bon.getAccel());
-            System.out.println("F Speed " + fred.getSpeed());
-        }
-        
+        System.out.println("Hour: " + time);
     }
 }
