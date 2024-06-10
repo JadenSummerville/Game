@@ -173,4 +173,13 @@ public class Chi extends Anam {
         checkRep();
         return numCups;
     }
+    @Override
+    public boolean shockAttempt() {
+        if (attack) {
+            attack = false;
+            send = SEND_MAX;
+            return true;
+        }
+        return false;
+    }
 }

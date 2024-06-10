@@ -70,7 +70,22 @@ public class Bon extends Anam {
     public void incrementAccel(double amount) {
         accel += amount;
         if (accel < 0) {
-            accel = 0;
+            accel = 0.000001;
         }
+    }
+    public double getAccel() {
+        return accel;
+    }
+    @Override
+    public boolean shockAttempt() {
+        if (speed == 0) {
+            return false;
+        }
+        speed = 0;
+        progress += MAX_PROGRESS/7;
+        if (progress > MAX_PROGRESS) {
+            progress = MAX_PROGRESS;
+        }
+        return true;
     }
 }

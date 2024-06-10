@@ -12,15 +12,13 @@ import Game.Display;
 
 public class Shock {
     private JLabel button;
-    private Fox fox;
-    public Shock(Display d, Fox fox) {
+    public Shock(Display d, Anam anam, int x) {
         String path = new File("").getAbsolutePath();
-        button = d.addImage(path+"/Photo/Zap.png", 20, 20, 888, 350);
-        this.fox = fox;
+        button = d.addImage(path+"/Photo/Zap.png", 20, 20, x, 350);
         this.button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!fox.shockAttempt()) {
+                if(!anam.shockAttempt()) {
                     return;
                 }
                 button.setVisible(false);

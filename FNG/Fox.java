@@ -63,8 +63,8 @@ public class Fox extends Anam {
         display.dispose();
         ticker.endLoop();
     }
-    public void incrementSpeed(double amount) {
-        if (speed == 0) {
+    public void incrementSpeed(double amount, boolean activate) {
+        if (speed == 0 && !activate) {
             return;
         }
         speed += amount;
@@ -72,12 +72,13 @@ public class Fox extends Anam {
             speed = 0.001;
         }
     }
+    @Override
     public boolean shockAttempt() {
-        if(random.nextDouble() < .5) {
-            on = false;
-            progress = MAX_PROGRESS;
-            return true;
+        if (!on) {
+            return false;
         }
-        return false;
+        on = false;
+        progress = MAX_PROGRESS;
+        return true;
     }
 }

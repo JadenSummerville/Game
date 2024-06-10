@@ -22,6 +22,11 @@ public class Clock extends Ticker.Entity {
         private Bon bon;
         private Fox fox;
         private Display display;
+        private long timePerHour;
+
+        private int time;
+
+        private static final boolean DEBUG = true;
 
     public Clock(Fred fred, Bon bon, Fox fox, Display display) {
         int x = 0;
@@ -31,6 +36,9 @@ public class Clock extends Ticker.Entity {
         this.bon = bon;
         this.fox = fox;
         this.display = display;
+
+        time = 0;
+        timePerHour = 80_000L;//10_000L;9
 
         String path = new File("").getAbsolutePath();
         this.t12 = display.addImage(path+"/Photo/12am.png", SIZE, SIZE, x, y);
@@ -50,8 +58,6 @@ public class Clock extends Ticker.Entity {
         Zscore zScoref = new Zscore(.7,1,10, -10);
         Zscore zScoreb = new Zscore(.5,3,10, -10);
         
-        long timePerHour = 80_000L;//10_000L;9
-        //System.out.println(timePerHour);
         Timer timer = new Timer();
 
         // 1am
@@ -82,7 +88,6 @@ public class Clock extends Ticker.Entity {
                 t3.setVisible(true);
                 //
                 hour(zScoref, zScoreb);
-                fox.incrementSpeed(.001);
             }
         }, 3*timePerHour);
         // 4am
@@ -118,7 +123,30 @@ public class Clock extends Ticker.Entity {
         //
     }
     private void hour(Zscore zScoref, Zscore zScoreb) {
-        bon.incrementAccel(0.000001*zScoreb.generate_value());
-        fred.incrementSpeed(0.001*zScoref.generate_value());
+        time++;
+        switch (time) {
+            case 1:
+            case 2:
+                bon.incrementAccel(0.000002*zScoreb.generate_value());
+                fred.incrementSpeed(0.001*zScoref.generate_value());
+                break;
+            case 3:
+            case 4:
+                fox.incrementSpeed(.00075, false);
+                bon.incrementAccel(bon.getAccel() * 0.08);
+                fred.incrementSpeed(fred.getSpeed() * 0.08);
+                break;
+            case 5:
+                fox.incrementSpeed(.001, true);
+                break;
+            default:
+                break;
+        }
+        if (DEBUG) {
+            System.out.println("Hour: " + time);
+            System.out.println("B Accel " + bon.getAccel());
+            System.out.println("F Speed " + fred.getSpeed());
+        }
+        
     }
 }

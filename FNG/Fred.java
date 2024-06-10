@@ -70,7 +70,21 @@ public class Fred extends Anam {
     public void incrementSpeed(double amount) {
         speed += amount;
         if (speed < 0) {
-            speed = 0;
+            speed = .0005;
         }
+    }
+    public double getSpeed() {
+        return speed;
+    }
+    @Override
+    public boolean shockAttempt() {
+        if (speed == 0) {
+            return false;
+        }
+        progress += MAX_PROGRESS/3;
+        if (progress > MAX_PROGRESS) {
+            progress = MAX_PROGRESS;
+        }
+        return true;
     }
 }

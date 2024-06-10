@@ -25,12 +25,15 @@ public class Cam extends Entity {
     private JLabel brokenImage;
     private boolean onHover;
     private boolean crashed;
+    private boolean toCrash = false;
+    private boolean canCrashActive;
     private static Raffle<Cam> raffle = new Raffle<>();
     private static final int STUBORN = 1_000;
     private static ArrayList<Cam> cams = new ArrayList<>();
     private static double camFragility;
     private static double camRecovery;
-    Cam(int x, int y, Anam character, Display display) {
+    Cam(int x, int y, Anam character, Display display, boolean canCrashActive) {
+        this.canCrashActive = canCrashActive;
         cams.add(this);
         this.character = character;
         this.display = display;
@@ -52,7 +55,13 @@ public class Cam extends Entity {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                character.stopObserving();
+                if (toCrash) {
+                    toCrash = false;
+                    crash();
+                }
+                else {
+                    character.stopObserving();
+                }
                 onHover = false;
             }
         });
@@ -80,7 +89,6 @@ public class Cam extends Entity {
             raffle.add(this);
             chanceToCrash(1.0 * raffle.getAmount(this) / raffle.size() * camFragility);
             if (raffle.size() > 2 * STUBORN) {
-                //System.out.println("Restart Cam Focus");
                 for (int i = 0; i != cams.size(); i++) {
                     raffle.setAmount(cams.get(i), raffle.getAmount(cams.get(i)) / 2);
                 }
@@ -90,18 +98,24 @@ public class Cam extends Entity {
     public void chanceToCrash(double chance) {
         double nextDouble = random.nextDouble();
         if (chance > nextDouble) {
-            this.brokenImage.setVisible(true);
-            this.image.setVisible(false);
-            crashed = true;
-            character.stopObserving();
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                fix();
+            if (canCrashActive) {
+                crash();
             }
-        }, 17_345);
+            toCrash = true;
         }
+    }
+    public void crash() {
+        this.brokenImage.setVisible(true);
+        this.image.setVisible(false);
+        crashed = true;
+        character.stopObserving();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+        @Override
+        public void run() {
+            fix();
+        }
+        }, 17_345);
     }
     public void chanceToFix(double chance) {
         if (chance > random.nextDouble()) {
