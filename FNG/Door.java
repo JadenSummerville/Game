@@ -2,6 +2,7 @@ package FNG;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.Random;
 
 import javax.swing.JLabel;
 
@@ -141,51 +142,54 @@ public class Door extends Ticker.Entity {
         return barricaded;
     }
     public static void main(String[] args) {
-        int night = 2;
+        int night = (new Random()).nextInt(5) + 1;
         Display d = new Display();
         Door[] doors = new Door[4];
         for (int i = 0; i != doors.length; i++) {
             doors[i] = new Door(d, 100 + 400*i, 270);
         }
+        Prop propDoor1 = new Prop(d, "/Photo/Door.png", 100, 1300, 684);
+        Prop propDoor2 = new Prop(d, "/Photo/Door.png", 100, 0, 690);
+        Prop hall = new Prop(d, "/Photo/Hall.png", 1536, 0, -330);
         Fred fred;
         Bon bon;
         Fox fox;
         Chi chi;
         switch (night) {
             case 1:
-                fred = new Fred( 0, doors[3], d);
-                bon = new Bon( 0, doors[0], d);
+                fred = new Fred( 0, doors[3], d, hall, propDoor1);
+                bon = new Bon( 0, doors[0], d, hall, propDoor2);
                 fox = new Fox( 0, doors[2], d);
                 chi = new Chi(480_000_000_000L-5_000_000_000L, doors[1], d);
                 Cam.setCamBreaks( 0, 1);
                 break;
             case 2:
-                fred = new Fred( .002, doors[3], d);
-                bon = new Bon( 0, doors[0], d);
+                fred = new Fred( .002, doors[3], d, hall, propDoor1);
+                bon = new Bon( 0, doors[0], d, hall, propDoor2);
                 fox = new Fox( 0, doors[2], d);
-                chi = new Chi(8_000_000_000L, doors[1], d);
+                chi = new Chi(7_500_000_000L, doors[1], d);
                 Cam.setCamBreaks( .003, 0.002);
                 break;
             case 3:
-                fred = new Fred( .001, doors[3], d);
-                bon = new Bon( 0.00003, doors[0], d);
-                fox = new Fox( 0.004, doors[2], d);
+                fred = new Fred( .0005, doors[3], d, hall, propDoor1);
+                bon = new Bon( 0.000017, doors[0], d, hall, propDoor2);
+                fox = new Fox( 0.002, doors[2], d);
                 chi = new Chi(100_000_000_000L, doors[1], d);
-                Cam.setCamBreaks( .005, 0.0012);
+                Cam.setCamBreaks( .0035, 0.0016);
                 break;
             case 4:
-                fred = new Fred( .003, doors[3], d);
-                bon = new Bon( 0.00002, doors[0], d);
-                fox = new Fox( 0.007, doors[2], d);
+                fred = new Fred( .003, doors[3], d, hall, propDoor1);
+                bon = new Bon( 0.00001, doors[0], d, hall, propDoor2);
+                fox = new Fox( 0.005, doors[2], d);
                 chi = new Chi(40_000_000_000L, doors[1], d);
-                Cam.setCamBreaks( .008, 0.001);
+                Cam.setCamBreaks( .005, 0.0014);
                 break;
             case 5:
-                fred = new Fred( .005, doors[3], d);
-                bon = new Bon( 0.00004, doors[0], d);
-                fox = new Fox( 0.0065, doors[2], d);
-                chi = new Chi(12_000_000_000L, doors[1], d);
-                Cam.setCamBreaks( .01, 0.0007);
+                fred = new Fred( .004, doors[3], d, hall, propDoor1);
+                bon = new Bon( 0.000015, doors[0], d, hall, propDoor2);
+                fox = new Fox( 0.0045, doors[2], d);
+                chi = new Chi(13_000_000_000L, doors[1], d);
+                Cam.setCamBreaks( .0055, 0.001);
                 break;
             default:
                 throw new RuntimeException("Invalid night selected.");

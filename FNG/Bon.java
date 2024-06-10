@@ -14,26 +14,35 @@ public class Bon extends Anam {
     private double speed;
     private Door door;
     private boolean observed = false;
-    public Bon(double accel, Door door, Display display) {
+    private Prop hall;
+    private Prop propDoor;
+    public Bon(double accel, Door door, Display display, Prop hall, Prop propDoor) {
         MAX_PROGRESS = 10;
-        HEIGHT = 700;
+        HEIGHT = 713;
         progress = MAX_PROGRESS;
         this.accel = accel;
         this.speed = 0;
         this.display = display;
         this.door = door;
+        this.hall = hall;
+        this.propDoor = propDoor;
         String path = new File("").getAbsolutePath();
         image = this.display.addImage(path+"/Photo/Bonnie.png", 100, 100, 0, HEIGHT);
         image.setVisible(false);
+        this.display.setZOrder(image, 0);
     }
     @Override
     public void startObserving() {
+        hall.display();
+        propDoor.display();
         observed = true;
         image.setVisible(true);
         speed = 0;
     }
     @Override
     public void stopObserving() {
+        hall.hide();
+        propDoor.hide();
         observed = false;
         image.setVisible(false);
     }
@@ -46,7 +55,7 @@ public class Bon extends Anam {
         if (progress <= 0) {
             attackDoor();
         }
-        image.setLocation((int)(1200*progress/MAX_PROGRESS), HEIGHT);
+        image.setLocation((int)(1400*progress/MAX_PROGRESS), HEIGHT);
     }
     public void attackDoor() {
         if (door.doorIsBarricaded()) {

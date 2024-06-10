@@ -118,7 +118,7 @@ public class Clock extends Ticker.Entity {
         //
     }
     private void hour(Zscore zScoref, Zscore zScoreb) {
-        bon.incrementAccel(0.0000015*zScoreb.generate_value());
+        bon.incrementAccel(0.000001*zScoreb.generate_value());
         fred.incrementSpeed(0.001*zScoref.generate_value());
     }
 }

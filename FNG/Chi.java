@@ -143,15 +143,15 @@ public class Chi extends Anam {
         checkRep();
         if (this.attack) {
             attackTimer += 5;
-            if (attackTimer > 140) {
-                attackTimer = 140;
+            if (attackTimer > 100) {
+                attackTimer = 100;
             }
             return;
         }
         send = SEND_MAX;
         this.attack = true;
         Random random = new Random();
-        attackTimer = 150 - 150 * random.nextDouble();  //20*zScore.generate_value();
+        attackTimer = 110 - 110 * Math.pow(random.nextDouble(), 2);  //20*zScore.generate_value();
         checkRep();
     }
     public void swapCupCake(int i, int j) {

@@ -17,26 +17,35 @@ public class Fred extends Anam {
     private double speed;
     private Door door;
     private boolean observed = false;
-    public Fred(double speed, Door door, Display display) {
+    private Prop hall;
+    private Prop propDoor;
+    public Fred(double speed, Door door, Display display, Prop hall, Prop propDoor) {
         MAX_PROGRESS = 10;
         HEIGHT = 700;
         progress = MAX_PROGRESS;
         this.speed = speed;
         this.display = display;
         this.door = door;
+        this.hall = hall;
+        this.propDoor = propDoor;
         String path = new File("").getAbsolutePath();
         image = this.display.addImage(path+"/Photo/Freddy.png", 100, 100, 0, HEIGHT);
         image.setVisible(false);
+        this.display.setZOrder(image, 0);
     }
     @Override
     public void startObserving() {
         observed = true;
         image.setVisible(true);
+        hall.display();
+        propDoor.display();
     }
     @Override
     public void stopObserving() {
         observed = false;
         image.setVisible(false);
+        hall.hide();
+        propDoor.hide();
     }
     @Override
     public void update() {
@@ -46,7 +55,7 @@ public class Fred extends Anam {
         if (progress <= 0) {
             attackDoor();
         }
-        image.setLocation((int)(1200 - 1200*progress/MAX_PROGRESS), HEIGHT);
+        image.setLocation((int)(1300 - 1300*progress/MAX_PROGRESS), HEIGHT);
     }
     public void attackDoor() {
         if (door.doorIsBarricaded()) {
